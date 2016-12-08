@@ -197,8 +197,8 @@ func (a *Ambly) SetStatus(status utils.Status) error {
 	a.Status = status.String()
 
 	update_fields := make(map[string]interface{})
-	update_fields["Inputs"] = js.ToString()
-	update_fields["Status"] = status.String()
+	update_fields["inputs"] = js.ToString()
+	update_fields["status"] = status.String()
 	ops := ldb.Options{
 		TableName:   ASSEMBLYBUCKET,
 		Pks:         []string{"id"},
@@ -213,13 +213,14 @@ func (a *Ambly) SetStatus(status utils.Status) error {
 	if err := ldb.Updatedb(ops, update_fields); err != nil {
 		return err
 	}
+
 	_ = eventNotify(status)
 	return nil
 }
 
 func (a *Ambly) SetState(state utils.State) error {
 	update_fields := make(map[string]interface{})
-	update_fields["State"] = state.String()
+	update_fields["state"] = state.String()
 	ops := ldb.Options{
 		TableName:   ASSEMBLYBUCKET,
 		Pks:         []string{"id"},

@@ -56,10 +56,10 @@ type Machine struct {
 func (m *Machine) SetStatus(status utils.Status) error {
 	log.Debugf("  set status[%s] of machine (%s, %s)", m.Id, m.Name, status.String())
 
-	if asm, err := carton.NewAmbly(m.CartonId); err != nil {
+	asm, err := carton.NewAmbly(m.CartonId)
+	if err != nil {
 		return err
 	} else if err = asm.SetStatus(status); err != nil {
-
 		return err
 	}
 
